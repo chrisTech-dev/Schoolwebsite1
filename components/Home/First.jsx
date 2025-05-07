@@ -80,7 +80,7 @@ export default function HeroCarousel() {
           />
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-t from-black/60 via-black/30 to-transparent">
             <div className={`text-center px-4 max-w-4xl ${slide.color}`}>
-              <h2 className="text-4xl pb-15 md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-wide">
+              <h2 className="text-4xl pt-15 md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-wide">
                 {slide.message}
               </h2>
             </div>

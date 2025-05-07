@@ -26,7 +26,7 @@ export default function GalleryPage() {
       id: 2,
       src: "/pic47.jpg",
       alt: "Students in science lab",
-      category: "Classroom",
+      category: "Science lab",
     },
     {
       id: 3,

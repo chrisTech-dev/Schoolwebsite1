@@ -128,8 +128,8 @@ export default function AcademicsPage() {
                 backgroundPosition: "left bottom",
               }}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">
-                Our Philosophy
+              <span className="  text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">
+                Our Philosophy&nbsp;
               </span>
               in Motion
             </motion.h2>

@@ -61,7 +61,7 @@ export default function SubjectsOffered() {
   };
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-b from-base-100 to-base-200">
+    <section className="py-16 px-4 md:px-8 bg-gradient-to-b from-base-100 to-base-200 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -70,11 +70,11 @@ export default function SubjectsOffered() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3">
             Our <span className="text-primary">Curriculum</span>
           </h2>
-          <div className="divider w-20 mx-auto"></div>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="divider w-20 mx-auto dark:before:bg-gray-700 dark:after:bg-gray-700"></div>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Comprehensive subjects designed to develop well-rounded students
           </p>
         </motion.div>
@@ -86,12 +86,12 @@ export default function SubjectsOffered() {
           transition={{ delay: 0.2 }}
           className="flex justify-center mb-12"
         >
-          <div className="tabs tabs-boxed bg-base-200 max-w-md mx-auto shadow-lg">
+          <div className="tabs tabs-boxed bg-base-200 dark:bg-gray-700 max-w-md mx-auto shadow-lg">
             <button
               className={`tab tab-lg font-medium ${
                 activeTab === "primary"
                   ? "tab-active bg-primary text-primary-content"
-                  : ""
+                  : "dark:text-gray-300"
               }`}
               onClick={() => setActiveTab("primary")}
             >
@@ -102,7 +102,7 @@ export default function SubjectsOffered() {
               className={`tab tab-lg font-medium ${
                 activeTab === "jhs"
                   ? "tab-active bg-secondary text-secondary-content"
-                  : ""
+                  : "dark:text-gray-300"
               }`}
               onClick={() => setActiveTab("jhs")}
             >
@@ -128,8 +128,8 @@ export default function SubjectsOffered() {
                 whileHover={{ y: -5 }}
                 className={`card ${
                   subject.core
-                    ? "bg-base-100 border-l-4 border-primary"
-                    : "bg-base-200 border-l-4 border-secondary"
+                    ? "bg-base-100 dark:bg-gray-800 border-l-4 border-primary"
+                    : "bg-base-200 dark:bg-gray-700 border-l-4 border-secondary"
                 } shadow-md hover:shadow-xl transition-all`}
               >
                 <div className="card-body p-6 flex flex-row items-center">
@@ -147,10 +147,10 @@ export default function SubjectsOffered() {
                     )}
                   </div>
                   <div>
-                    <h4 className="card-title text-lg font-semibold">
+                    <h4 className="card-title text-lg font-semibold dark:text-white">
                       {subject.name}
                     </h4>
-                    <p className="text-sm opacity-70">
+                    <p className="text-sm opacity-70 dark:text-gray-300">
                       {subject.core ? "Core Subject" : "Elective Subject"}
                     </p>
                   </div>
@@ -167,7 +167,7 @@ export default function SubjectsOffered() {
           transition={{ delay: 0.5 }}
           className="mt-12 text-center max-w-2xl mx-auto"
         >
-          <div className="alert alert-info shadow-lg">
+          <div className="alert alert-info shadow-lg dark:bg-gray-700 dark:text-gray-300">
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

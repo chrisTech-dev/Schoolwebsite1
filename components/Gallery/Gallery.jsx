@@ -151,7 +151,7 @@ export default function GalleryPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="max-w-7xl mx-auto px-4 py-12 dark:bg-gray-900">
       {/* Lightbox Modal */}
       <AnimatePresence>
         {selectedImage && (
@@ -208,7 +208,7 @@ export default function GalleryPage() {
         className="text-center mb-16"
       >
         <motion.h2
-          className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+          className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -225,7 +225,7 @@ export default function GalleryPage() {
           transition={{ duration: 1, delay: 0.5 }}
         />
         <motion.p
-          className="text-xl text-gray-600 max-w-2xl mx-auto"
+          className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
@@ -247,7 +247,9 @@ export default function GalleryPage() {
             key={category}
             onClick={() => setActiveFilter(category)}
             className={`btn btn-sm ${
-              activeFilter === category ? "btn-primary" : "btn-ghost"
+              activeFilter === category
+                ? "btn-primary"
+                : "btn-ghost dark:text-gray-300 dark:hover:bg-gray-700"
             }`}
             variants={filterItem}
             initial="hidden"
@@ -274,7 +276,7 @@ export default function GalleryPage() {
               key={image.id}
               variants={item}
               whileHover="hover"
-              className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+              className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer dark:shadow-gray-800/50"
               layout
               onClick={() => openLightbox(image, index)}
             >

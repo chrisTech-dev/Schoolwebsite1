@@ -8,9 +8,32 @@ import {
   animate,
 } from "framer-motion";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProgramsSection() {
+  // State to track dark mode
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Check for dark mode preference on component mount
+  useEffect(() => {
+    // Check for system preference
+    const darkModeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDarkMode(darkModeQuery.matches);
+
+    // Listen for changes in system preference
+    const handleChange = (e) => setIsDarkMode(e.matches);
+    darkModeQuery.addEventListener("change", handleChange);
+
+    // Also check for any dark mode class/data attribute on document
+    const isDarkTheme =
+      document.documentElement.classList.contains("dark") ||
+      document.documentElement.getAttribute("data-theme") === "dark";
+
+    if (isDarkTheme) setIsDarkMode(true);
+
+    return () => darkModeQuery.removeEventListener("change", handleChange);
+  }, []);
+
   const programs = [
     {
       title: "Kindergarten",
@@ -27,11 +50,20 @@ export default function ProgramsSection() {
         { url: "/pic12.jpg", style: "rounded-lg", size: "w-full h-32" },
       ],
       colorScheme: {
-        bg: "bg-pink-50",
-        text: "text-pink-700",
-        button: "from-pink-500 to-pink-600",
-        border: "border-pink-200",
-        accent: "bg-pink-100",
+        light: {
+          bg: "bg-pink-50",
+          text: "text-pink-700",
+          button: "from-pink-500 to-pink-600",
+          border: "border-pink-200",
+          accent: "bg-pink-100",
+        },
+        dark: {
+          bg: "bg-pink-950/40",
+          text: "text-pink-300",
+          button: "from-pink-700 to-pink-800",
+          border: "border-pink-900",
+          accent: "bg-pink-900",
+        },
       },
     },
     {
@@ -49,15 +81,24 @@ export default function ProgramsSection() {
         {
           url: "/pic36.jpg",
           style: "rounded-b-box",
-          size: "w-20 h-20 absolute -top-4 right-4 border-4 border-white",
+          size: "w-20 h-20 absolute -top-4 right-4 border-4 border-white dark:border-gray-800",
         },
       ],
       colorScheme: {
-        bg: "bg-blue-50",
-        text: "text-blue-700",
-        button: "from-blue-500 to-blue-600",
-        border: "border-blue-200",
-        accent: "bg-blue-100",
+        light: {
+          bg: "bg-blue-50",
+          text: "text-blue-700",
+          button: "from-blue-500 to-blue-600",
+          border: "border-blue-200",
+          accent: "bg-blue-100",
+        },
+        dark: {
+          bg: "bg-blue-950/40",
+          text: "text-blue-300",
+          button: "from-blue-700 to-blue-800",
+          border: "border-blue-900",
+          accent: "bg-blue-900",
+        },
       },
     },
     {
@@ -75,17 +116,30 @@ export default function ProgramsSection() {
         { url: "/pic42.jpg", style: "rounded-r-box", size: "w-1/2 h-full" },
       ],
       colorScheme: {
-        bg: "bg-teal-50",
-        text: "text-teal-700",
-        button: "from-teal-500 to-teal-600",
-        border: "border-teal-200",
-        accent: "bg-teal-100",
+        light: {
+          bg: "bg-teal-50",
+          text: "text-teal-700",
+          button: "from-teal-500 to-teal-600",
+          border: "border-teal-200",
+          accent: "bg-teal-100",
+        },
+        dark: {
+          bg: "bg-teal-950/40",
+          text: "text-teal-300",
+          button: "from-teal-700 to-teal-800",
+          border: "border-teal-900",
+          accent: "bg-teal-900",
+        },
       },
     },
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-base-100 overflow-hidden">
+    <section
+      className={`py-16 px-4 md:px-8 ${
+        isDarkMode ? "bg-gray-900 text-gray-100" : "bg-base-100 text-gray-900"
+      } overflow-hidden`}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Section Header with Advanced Animation */}
         <motion.div
@@ -99,7 +153,9 @@ export default function ProgramsSection() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <motion.h2
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            className={`text-4xl md:text-5xl font-bold mb-4 ${
+              isDarkMode ? "text-gray-100" : "text-gray-900"
+            }`}
             initial={{ letterSpacing: "0.5em", opacity: 0 }}
             whileInView={{
               letterSpacing: "normal",
@@ -110,7 +166,9 @@ export default function ProgramsSection() {
             Our <span className="text-primary">Academic Programs</span>
           </motion.h2>
           <motion.p
-            className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
+            className={`text-lg md:text-xl max-w-3xl mx-auto ${
+              isDarkMode ? "text-gray-300" : "text-gray-600"
+            }`}
             initial={{ opacity: 0 }}
             whileInView={{
               opacity: 1,
@@ -129,12 +187,19 @@ export default function ProgramsSection() {
             const radius = useMotionValue(0);
             const opacity = useMotionValue(0);
 
+            // Select the appropriate color scheme based on dark mode
+            const colorScheme = isDarkMode
+              ? program.colorScheme.dark
+              : program.colorScheme.light;
+
             useEffect(() => {
               animate(radius, 1000, { duration: 2.5, ease: "circOut" });
               animate(opacity, 0.1, { duration: 1 });
             }, []);
 
-            const background = useMotionTemplate`radial-gradient(${radius}px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.3), transparent 80%)`;
+            const background = useMotionTemplate`radial-gradient(${radius}px circle at ${mouseX}px ${mouseY}px, ${
+              isDarkMode ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.3)"
+            }, transparent 80%)`;
 
             return (
               <motion.div
@@ -160,7 +225,7 @@ export default function ProgramsSection() {
                   transition: { duration: 0.4 },
                 }}
                 viewport={{ once: true, margin: "-100px" }}
-                className={`group relative overflow-hidden rounded-2xl border ${program.colorScheme.border} ${program.colorScheme.bg} shadow-lg hover:shadow-xl transition-all duration-500`}
+                className={`group relative overflow-hidden rounded-2xl border ${colorScheme.border} ${colorScheme.bg} shadow-lg hover:shadow-xl transition-all duration-500`}
               >
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -168,7 +233,11 @@ export default function ProgramsSection() {
                 />
 
                 {/* Image Gallery */}
-                <div className="relative flex items-center justify-center mb-6 h-48 bg-white/30 overflow-hidden">
+                <div
+                  className={`relative flex items-center justify-center mb-6 h-48 ${
+                    isDarkMode ? "bg-gray-800/30" : "bg-white/30"
+                  } overflow-hidden`}
+                >
                   {program.images.map((img, imgIndex) => (
                     <motion.div
                       key={imgIndex}
@@ -192,7 +261,7 @@ export default function ProgramsSection() {
                 {/* Content */}
                 <div className="p-6 relative z-10">
                   <motion.h3
-                    className={`text-2xl font-bold mb-3 ${program.colorScheme.text}`}
+                    className={`text-2xl font-bold mb-3 ${colorScheme.text}`}
                     initial={{ x: -20 }}
                     whileInView={{ x: 0 }}
                     transition={{ delay: index * 0.2 + 0.3 }}
@@ -201,7 +270,9 @@ export default function ProgramsSection() {
                   </motion.h3>
 
                   <motion.p
-                    className="text-gray-600 mb-6"
+                    className={
+                      isDarkMode ? "text-gray-300 mb-6" : "text-gray-600 mb-6"
+                    }
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: index * 0.2 + 0.4 }}
@@ -222,12 +293,18 @@ export default function ProgramsSection() {
                         className="flex items-start"
                       >
                         <span
-                          className={`w-2 h-2 rounded-full mt-2 mr-3 ${program.colorScheme.text.replace(
+                          className={`w-2 h-2 rounded-full mt-2 mr-3 ${colorScheme.text.replace(
                             "text",
                             "bg"
                           )}`}
                         ></span>
-                        <span className="text-gray-700">{feature}</span>
+                        <span
+                          className={
+                            isDarkMode ? "text-gray-300" : "text-gray-700"
+                          }
+                        >
+                          {feature}
+                        </span>
                       </motion.li>
                     ))}
                   </ul>
@@ -239,10 +316,12 @@ export default function ProgramsSection() {
                     transition={{ delay: index * 0.2 + 0.9 }}
                     whileHover={{
                       scale: 1.05,
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+                      boxShadow: isDarkMode
+                        ? "0 10px 25px -5px rgba(0, 0, 0, 0.5)"
+                        : "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
                     }}
                     whileTap={{ scale: 0.98 }}
-                    className={`btn w-full bg-gradient-to-r ${program.colorScheme.button} text-white shadow-md hover:shadow-lg relative overflow-hidden`}
+                    className={`btn w-full bg-gradient-to-r ${colorScheme.button} text-white shadow-md hover:shadow-lg relative overflow-hidden`}
                   >
                     <span className="relative z-10 flex items-center justify-center">
                       Explore Program
@@ -258,7 +337,7 @@ export default function ProgramsSection() {
 
                 {/* Hover Accent */}
                 <motion.div
-                  className={`absolute bottom-0 left-0 right-0 h-1 ${program.colorScheme.text.replace(
+                  className={`absolute bottom-0 left-0 right-0 h-1 ${colorScheme.text.replace(
                     "text",
                     "bg"
                   )}`}

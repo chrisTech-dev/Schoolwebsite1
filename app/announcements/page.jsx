@@ -18,30 +18,22 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 
 
 export default function AnnouncementsContent() {
-
-
- const { isSignedIn, isLoaded } = useUser();
- const router = useRouter();
-
+  const { isSignedIn, isLoaded } = useUser();
+  const router = useRouter();
 
   // Removed the undefined useUser() hook and related variables
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
 
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
-
- useEffect(() => {
-   if (isLoaded && !isSignedIn) {
-     router.push("/");
-   }
- }, [isLoaded, isSignedIn, router]);
-
- if (!isLoaded || !isSignedIn) {
-   return <LoadingSpinner />; // or a loading spinner
- }
-
-
-
+  if (!isLoaded || !isSignedIn) {
+    return <LoadingSpinner />; // or a loading spinner
+  }
 
   // Animation variants
   const container = {
@@ -176,7 +168,7 @@ export default function AnnouncementsContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial="hidden"
         animate="show"
@@ -191,7 +183,10 @@ export default function AnnouncementsContent() {
           >
             Latest Announcements
           </motion.h1>
-          <motion.p variants={fadeIn} className="text-lg text-gray-600">
+          <motion.p
+            variants={fadeIn}
+            className="text-lg text-gray-600 dark:text-gray-300"
+          >
             Stay up to date with the latest news, events, and important updates
             from our school.
           </motion.p>
@@ -204,11 +199,11 @@ export default function AnnouncementsContent() {
               <input
                 type="text"
                 placeholder="Search announcements..."
-                className="input input-bordered w-full pl-10"
+                className="input input-bordered w-full pl-10 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <div className="absolute left-3 top-3 text-gray-400">
+              <div className="absolute left-3 top-3 text-gray-400 dark:text-gray-500">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5"
@@ -233,7 +228,9 @@ export default function AnnouncementsContent() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`btn btn-sm ${
-                    activeFilter === type.id ? "btn-primary" : "btn-ghost"
+                    activeFilter === type.id
+                      ? "btn-primary"
+                      : "btn-ghost dark:text-gray-300 dark:hover:bg-gray-700"
                   }`}
                   onClick={() => setActiveFilter(type.id)}
                 >
@@ -253,8 +250,10 @@ export default function AnnouncementsContent() {
                 key={announcement.id}
                 variants={item}
                 whileHover={{ y: -3 }}
-                className={`card shadow-lg ${
-                  announcement.important ? "border-l-4 border-yellow-400" : ""
+                className={`card shadow-lg dark:bg-gray-800 dark:border-gray-700 ${
+                  announcement.important
+                    ? "border-l-4 border-yellow-400 dark:border-yellow-500"
+                    : ""
                 }`}
               >
                 <div className="card-body">
@@ -266,15 +265,15 @@ export default function AnnouncementsContent() {
                         {announcement.icon}
                       </div>
                       <div>
-                        <h2 className="card-title text-lg md:text-xl">
+                        <h2 className="card-title text-lg md:text-xl dark:text-white">
                           {announcement.title}
                           {announcement.important && (
-                            <div className="badge badge-warning ml-2">
+                            <div className="badge badge-warning ml-2 dark:bg-yellow-600 dark:text-white">
                               Important
                             </div>
                           )}
                         </h2>
-                        <div className="text-sm text-gray-500 mb-2">
+                        <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                           {new Date(announcement.date).toLocaleDateString(
                             "en-US",
                             {
@@ -284,7 +283,7 @@ export default function AnnouncementsContent() {
                             }
                           )}
                         </div>
-                        <p className="text-gray-600">
+                        <p className="text-gray-600 dark:text-gray-300">
                           {announcement.description}
                         </p>
                       </div>
@@ -295,7 +294,7 @@ export default function AnnouncementsContent() {
                     <div className="card-actions justify-end mt-4">
                       <motion.a
                         href={announcement.attachment}
-                        className="btn btn-sm btn-outline"
+                        className="btn btn-sm btn-outline dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
@@ -309,7 +308,7 @@ export default function AnnouncementsContent() {
             ))
           ) : (
             <motion.div variants={fadeIn} className="text-center py-12">
-              <div className="text-gray-400 mb-4">
+              <div className="text-gray-400 dark:text-gray-600 mb-4">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-12 w-12 mx-auto"
@@ -325,10 +324,10 @@ export default function AnnouncementsContent() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-medium text-gray-600">
+              <h3 className="text-xl font-medium text-gray-600 dark:text-gray-300">
                 No announcements found
               </h3>
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 Try adjusting your search or filter criteria
               </p>
             </motion.div>
@@ -337,11 +336,11 @@ export default function AnnouncementsContent() {
 
         {/* Call to Action */}
         <motion.div variants={item} className="mt-12 text-center">
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
               Need help or have questions?
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               Contact the school office for more information about any
               announcements.
             </p>

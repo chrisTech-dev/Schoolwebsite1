@@ -166,8 +166,9 @@ export default function ContactPage() {
         viewport={{ once: true, margin: "-100px" }}
         className="mb-16"
       >
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden max-w-4xl mx-auto">
+        <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl overflow-hidden max-w-4xl mx-auto">
           <div className="md:flex">
+            {/* Left Panel */}
             <div className="md:w-1/2 bg-gradient-to-br from-purple-500 to-pink-500 p-8 text-white flex flex-col justify-center">
               <motion.div
                 initial={{ scale: 0.8 }}
@@ -185,7 +186,8 @@ export default function ContactPage() {
               </motion.div>
             </div>
 
-            <div className="md:w-1/2 p-8">
+            {/* Right Form */}
+            <div className="md:w-1/2 p-8 dark:text-white">
               <motion.form
                 variants={containerVariants}
                 initial="hidden"
@@ -197,7 +199,7 @@ export default function ContactPage() {
                   <input
                     type="text"
                     placeholder="Your Name"
-                    className="input input-bordered w-full bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-300"
+                    className="input input-bordered w-full bg-gray-50 dark:bg-gray-800 dark:border-gray-700 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-purple-300"
                     required
                   />
                 </motion.div>
@@ -206,7 +208,7 @@ export default function ContactPage() {
                   <input
                     type="email"
                     placeholder="Email Address"
-                    className="input input-bordered w-full bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-300"
+                    className="input input-bordered w-full bg-gray-50 dark:bg-gray-800 dark:border-gray-700 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-purple-300"
                     required
                   />
                 </motion.div>
@@ -215,7 +217,7 @@ export default function ContactPage() {
                   <input
                     type="text"
                     placeholder="Subject"
-                    className="input input-bordered w-full bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-300"
+                    className="input input-bordered w-full bg-gray-50 dark:bg-gray-800 dark:border-gray-700 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-purple-300"
                     required
                   />
                 </motion.div>
@@ -223,7 +225,7 @@ export default function ContactPage() {
                 <motion.div variants={formItem}>
                   <textarea
                     placeholder="Your Message"
-                    className="textarea textarea-bordered w-full bg-gray-50 focus:bg-white focus:ring-2 focus:ring-purple-300"
+                    className="textarea textarea-bordered w-full bg-gray-50 dark:bg-gray-800 dark:border-gray-700 focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-purple-300"
                     rows="5"
                     required
                   ></textarea>
